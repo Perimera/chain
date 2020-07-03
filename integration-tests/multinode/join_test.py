@@ -65,8 +65,8 @@ print('Starting', TARGET_NODE)
 supervisor.supervisor.startProcessGroup(TARGET_NODE)
 wait_for_port(TARGET_PORT + 7)
 print('Started', TARGET_NODE)
-
-jailed_until = state['validator']['jailed_until']
+print(state)
+jailed_until = state['CouncilNode']['council_node']['jailed_until']
 assert jailed_until is None, 'NonLive fault is not jailed'
 
 print('Join', TARGET_NODE)
