@@ -61,7 +61,8 @@ wait_for_port(BASE_PORT + 10 + 7)
 wait_for_blocks(rpc, 13)
 rpc.wallet.sync()
 state = rpc.staking.state(bonded_staking)
-assert state['validator']['jailed_until'] is not None, 'jailed for byzantine fault'
+print(state)
+assert state['CouncilNode']['council_node']['jailed_until'] is not None, 'jailed for byzantine fault'
 punishment = state['last_slash']
 print('punishment', punishment)
 assert punishment['kind'] == 'ByzantineFault'
@@ -69,8 +70,8 @@ assert punishment['kind'] == 'ByzantineFault'
 assert len(rpc.chain.validators()['validators']) == 1
 
 stop_node(supervisor, 'node1')
-print('Wait until jailed_until', state['validator']['jailed_until'])
-wait_for_blocktime(rpc, state['validator']['jailed_until'])
+print('Wait until jailed_until', state['CouncilNode']['council_node']['jailed_until'])
+wait_for_blocktime(rpc, state['CouncilNode']['council_node']['jailed_until'])
 
 txid = rpc.staking.unjail(bonded_staking)
 print('Wait for unjail transaction', txid)
